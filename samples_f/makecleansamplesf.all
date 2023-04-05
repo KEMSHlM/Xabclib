@@ -1,0 +1,31 @@
+cd ./ARNOLDI
+gmake clean
+cd ../BICGSTAB
+gmake clean
+cd ../CCS2CRS
+gmake clean
+cd ../DSRMV
+gmake clean
+cd ../DURMV
+gmake clean
+cd ../EIGENSOLVE_ARNOLDI
+gmake clean
+cd ../EIGENSOLVE_LANCZOS
+gmake clean
+cd ../EIGENSOLVE_THREAD_SAFE
+gmake clean
+cd ../GMRES
+gmake clean
+cd ../LANCZOS
+gmake clean
+cd ../LINEARSOLVE
+gmake clean
+cd ../LINEARSOLVE_AUTO
+gmake clean
+cd ../LINEARSOLVE_THREAD_SAFE
+gmake clean
+cd ../CG
+gmake clean
+
+cd ..
+

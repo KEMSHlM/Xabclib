@@ -1,0 +1,73 @@
+cd ./OpenAT
+gmake
+cd ../Xabclib/Xabclib_GMRES
+gmake
+cd ../Xabclib_BICGSTAB
+gmake
+cd ../Xabclib_LANCZOS
+gmake
+cd ../Xabclib_ARNOLDI
+gmake
+cd ../Xabclib_CG
+gmake
+cd ../
+cd ../
+
+rm libOpenAT.a
+
+ar -qv libOpenAT.a \
+	./OpenAT/OpenATI_DAFGS.o \
+	./OpenAT/OpenATI_DAFRT.o ./OpenAT/OpenATI_DSRMV.o \
+	./OpenAT/OpenATI_DSRMV_Setup.o ./OpenAT/OpenATI_DURMV.o \
+	./OpenAT/OpenATI_DURMV_Setup.o ./OpenAT/OpenATI_EIGENSOLVE.o \
+	./OpenAT/OpenATI_LINEARSOLVE.o ./OpenAT/OpenATI_NZDIV.o \
+	./OpenAT/OpenATI_UTIL.o \
+	./OpenAT/OpenATI_init.o \
+	./OpenAT/OpenATI_GET_VER.o \
+	./OpenAT/OpenATI_DAFSTG.o \
+	./OpenAT/OpenATI_DAFMC_CCS2CRS.o \
+	./OpenAT/OpenATI_QSORTI.o \
+\
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_GS_Policy.o \
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_INIT.o \
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_MIN.o \
+        ./Xabclib/Xabclib_GMRES/Xabclib_GMRES_MGS_MIN.o \
+        ./Xabclib/Xabclib_GMRES/Xabclib_GMRES.o \
+        ./Xabclib/Xabclib_GMRES/Xabclib_GMRES2.o \
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_PCHK.o \
+\
+	./Xabclib/Xabclib_LANCZOS/BLAS_dstevd.o \
+	./Xabclib/Xabclib_LANCZOS/LAPACK_dstevd.o \
+	./Xabclib/Xabclib_LANCZOS/Xabclib_LANCZOS.o \
+	./Xabclib/Xabclib_LANCZOS/Xabclib_MGramSch.o \
+	./Xabclib/Xabclib_LANCZOS/Xabclib_QSORTD.o \
+	./Xabclib/Xabclib_BICGSTAB/ILUT.o \
+	./Xabclib/Xabclib_BICGSTAB/ILUTSOL.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_IDIAGPGEN.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_PCGENE.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_EVAL.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BLAS1.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_PCSLV.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BICGSTAB_PCHK.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BICGSTABV.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BICGSTAB.o \
+\
+	./Xabclib/Xabclib_ARNOLDI/Xabclib_ARNOLDI.o \
+	./Xabclib/Xabclib_ARNOLDI/LAPACK_dgeev.o \
+	./Xabclib/Xabclib_ARNOLDI/BLAS_dgeev.o \
+\
+        ./Xabclib/Xabclib_CG/Xabclib_CG.o \
+        ./Xabclib/Xabclib_CG/Xabclib_IC0D.o \
+        ./Xabclib/Xabclib_CG/Xabclib_CG_PCHK.o \
+        ./Xabclib/Xabclib_CG/Xabclib_EVAL_SYM.o \
+        ./Xabclib/Xabclib_CG/Xabclib_PCGENS.o \
+        ./Xabclib/Xabclib_CG/Xabclib_PCSLV_SYM.o \
+        ./Xabclib/Xabclib_CG/Xabclib_DSRMV_ForJacobiIter.o \
+
+cd ./samples_f
+./makecleansamplesf.all
+./makesamplesf.all
+cd ../samples_c
+./makecleansamplesc.all
+./makesamplesc.all
+cd ..

@@ -1,0 +1,9 @@
+cd ./BICGSTAB
+gmake
+cd ../GMRES
+gmake
+cd ../LINEARSOLVE
+gmake
+
+cd ..
+

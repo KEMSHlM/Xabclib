@@ -1,0 +1,118 @@
+#!/bin/sh
+
+##################Intel Compiler#################
+export F90="ifort -O3 -m64 -fopenmp -shared-intel -cpp -fixed"
+export F90O3="ifort -O0 -m64 -ofpenmp -shared-intel -cpp -fixed"
+export CC="icc -O3 -m64 -shared-intel -fopenmp -lifport -lifcore -shared-intel"
+export LD="icc -O3 -m64 -shared-intel -fopenmp -lifport -lifcore -shared-intel"
+
+##################GNU Compiler###################
+#export F90="gfortran -O3 -m64 -fopenmp -mcmodel=medium -cpp -ffixed-form -fPIC"
+#export F90O3="gfortran -O0 -m64 -fopenmp -mcmodel=medium -cpp -ffixed-form -fPIC"
+#export CC="gcc -O3 -m64 -fopenmp -mcmodel=medium"
+#export LD="gfortran -O3 -m64 -fopenmp -mcmodel=medium"
+
+cd "./OpenAT" && gmake F90="$F90"
+cd ../Xabclib/Xabclib_GMRES
+gmake F90="$F90"
+cd ../Xabclib_BICGSTAB
+gmake F90="$F90"
+cd ../Xabclib_LANCZOS
+gmake F90="$F90" F90O3="$F90O3"
+cd ../Xabclib_ARNOLDI
+gmake F90="$F90" F90O3="$F90O3"
+cd ../Xabclib_CG
+gmake F90="$F90" F90O3="$F90O3"
+cd ../
+cd ../
+
+rm libOpenAT.a
+
+ar -qv libOpenAT.a \
+	./OpenAT/OpenATI_DAFGS.o \
+	./OpenAT/OpenATI_DAFRT.o ./OpenAT/OpenATI_DSRMV.o \
+	./OpenAT/OpenATI_DSRMV_Setup.o ./OpenAT/OpenATI_DURMV.o \
+	./OpenAT/OpenATI_DURMV_Setup.o ./OpenAT/OpenATI_EIGENSOLVE.o \
+	./OpenAT/OpenATI_LINEARSOLVE.o ./OpenAT/OpenATI_NZDIV.o \
+	./OpenAT/OpenATI_UTIL.o \
+	./OpenAT/OpenATI_init.o \
+	./OpenAT/OpenATI_GET_VER.o \
+	./OpenAT/OpenATI_DAFSTG.o \
+	./OpenAT/OpenATI_DAFMC_CCS2CRS.o \
+	./OpenAT/OpenATI_QSORTI.o \
+\
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_GS_Policy.o \
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_INIT.o \
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_MIN.o \
+        ./Xabclib/Xabclib_GMRES/Xabclib_GMRES_MGS_MIN.o \
+        ./Xabclib/Xabclib_GMRES/Xabclib_GMRES.o \
+        ./Xabclib/Xabclib_GMRES/Xabclib_GMRES2.o \
+	./Xabclib/Xabclib_GMRES/Xabclib_GMRES_PCHK.o \
+\
+	./Xabclib/Xabclib_LANCZOS/BLAS_dstevd.o \
+	./Xabclib/Xabclib_LANCZOS/LAPACK_dstevd.o \
+	./Xabclib/Xabclib_LANCZOS/Xabclib_LANCZOS.o \
+	./Xabclib/Xabclib_LANCZOS/Xabclib_MGramSch.o \
+	./Xabclib/Xabclib_LANCZOS/Xabclib_QSORTD.o \
+	./Xabclib/Xabclib_BICGSTAB/ILUT.o \
+	./Xabclib/Xabclib_BICGSTAB/ILUTSOL.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_IDIAGPGEN.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_PCGENE.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_EVAL.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BLAS1.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_PCSLV.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BICGSTAB_PCHK.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BICGSTABV.o \
+	./Xabclib/Xabclib_BICGSTAB/Xabclib_BICGSTAB.o \
+\
+	./Xabclib/Xabclib_ARNOLDI/Xabclib_ARNOLDI.o \
+	./Xabclib/Xabclib_ARNOLDI/LAPACK_dgeev.o \
+	./Xabclib/Xabclib_ARNOLDI/BLAS_dgeev.o \
+\
+	./Xabclib/Xabclib_CG/Xabclib_CG.o \
+	./Xabclib/Xabclib_CG/Xabclib_IC0D.o \
+	./Xabclib/Xabclib_CG/Xabclib_CG_PCHK.o \
+	./Xabclib/Xabclib_CG/Xabclib_EVAL_SYM.o \
+	./Xabclib/Xabclib_CG/Xabclib_PCGENS.o \
+	./Xabclib/Xabclib_CG/Xabclib_PCSLV_SYM.o \
+	./Xabclib/Xabclib_CG/Xabclib_DSRMV_ForJacobiIter.o \
+
+cd ./samples_f
+./makecleansamplesf.all
+cd ./ARNOLDI
+gmake F90="$F90"
+cd ../BICGSTAB
+gmake F90="$F90"
+cd ../CCS2CRS
+gmake F90="$F90"
+cd ../DSRMV
+gmake F90="$F90"
+cd ../DURMV
+gmake F90="$F90"
+cd ../EIGENSOLVE_ARNOLDI
+gmake F90="$F90"
+cd ../EIGENSOLVE_LANCZOS
+gmake F90="$F90"
+cd ../EIGENSOLVE_THREAD_SAFE
+gmake F90="$F90"
+cd ../GMRES
+gmake F90="$F90"
+cd ../LANCZOS
+gmake F90="$F90"
+cd ../LINEARSOLVE
+gmake F90="$F90"
+cd ../LINEARSOLVE_AUTO
+gmake F90="$F90"
+cd ../LINEARSOLVE_THREAD_SAFE
+gmake F90="$F90"
+cd ../CG
+gmake F90="$F90"
+cd ../../samples_c
+./makecleansamplesc.all
+cd ./BICGSTAB
+gmake CC="$CC" LD="$LD"
+cd ../GMRES
+gmake CC="$CC" LD="$LD"
+cd ../LINEARSOLVE
+gmake CC="$CC" LD="$LD"
+cd ../..

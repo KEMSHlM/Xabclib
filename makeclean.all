@@ -1,0 +1,21 @@
+cd ./OpenAT
+gmake clean
+cd ../Xabclib/Xabclib_GMRES
+gmake clean
+cd ../Xabclib_LANCZOS
+gmake clean
+cd ../Xabclib_BICGSTAB
+gmake clean
+cd ../Xabclib_ARNOLDI
+gmake clean
+cd ../Xabclib_CG
+gmake clean
+
+cd ../../samples_f
+./makecleansamplesf.all
+cd ../samples_c
+./makecleansamplesc.all
+
+cd ../
+
+rm libOpenAT.a
