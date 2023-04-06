@@ -13,16 +13,11 @@ export LD="icc -O3 -m64 -shared-intel -fopenmp -lifport -lifcore -shared-intel"
 #export LD="gfortran -O3 -m64 -fopenmp -mcmodel=medium"
 
 cd "./OpenAT" && gmake F90="$F90"
-cd ../Xabclib/Xabclib_GMRES
-gmake F90="$F90"
-cd ../Xabclib_BICGSTAB
-gmake F90="$F90"
-cd ../Xabclib_LANCZOS
-gmake F90="$F90" F90O3="$F90O3"
-cd ../Xabclib_ARNOLDI
-gmake F90="$F90" F90O3="$F90O3"
-cd ../Xabclib_CG
-gmake F90="$F90" F90O3="$F90O3"
+cd "../Xabclib/Xabclib_GMRES" && gmake F90="$F90"
+cd "../Xabclib_BICGSTAB" && gmake F90="$F90"
+cd "../Xabclib_LANCZOS" && gmake F90="$F90" F90O3="$F90O3"
+cd "../Xabclib_ARNOLDI" && gmake F90="$F90" F90O3="$F90O3"
+cd "../Xabclib_CG" && gmake F90="$F90" F90O3="$F90O3"
 cd ../
 cd ../
 
@@ -77,42 +72,23 @@ ar -qv libOpenAT.a \
 	./Xabclib/Xabclib_CG/Xabclib_PCSLV_SYM.o \
 	./Xabclib/Xabclib_CG/Xabclib_DSRMV_ForJacobiIter.o \
 
-cd ./samples_f
-./makecleansamplesf.all
-cd ./ARNOLDI
-gmake F90="$F90"
-cd ../BICGSTAB
-gmake F90="$F90"
-cd ../CCS2CRS
-gmake F90="$F90"
-cd ../DSRMV
-gmake F90="$F90"
-cd ../DURMV
-gmake F90="$F90"
-cd ../EIGENSOLVE_ARNOLDI
-gmake F90="$F90"
-cd ../EIGENSOLVE_LANCZOS
-gmake F90="$F90"
-cd ../EIGENSOLVE_THREAD_SAFE
-gmake F90="$F90"
-cd ../GMRES
-gmake F90="$F90"
-cd ../LANCZOS
-gmake F90="$F90"
-cd ../LINEARSOLVE
-gmake F90="$F90"
-cd ../LINEARSOLVE_AUTO
-gmake F90="$F90"
-cd ../LINEARSOLVE_THREAD_SAFE
-gmake F90="$F90"
-cd ../CG
-gmake F90="$F90"
-cd ../../samples_c
-./makecleansamplesc.all
-cd ./BICGSTAB
-gmake CC="$CC" LD="$LD"
-cd ../GMRES
-gmake CC="$CC" LD="$LD"
-cd ../LINEARSOLVE
-gmake CC="$CC" LD="$LD"
+cd "./samples_f" && ./makecleansamplesf.all
+cd "./ARNOLDI" && gmake F90="$F90"
+cd "../BICGSTAB" && gmake F90="$F90"
+cd "../CCS2CRS" && gmake F90="$F90"
+cd "../DSRMV" && gmake F90="$F90"
+cd "../DURMV" && gmake F90="$F90"
+cd "../EIGENSOLVE_ARNOLDI" && gmake F90="$F90"
+cd "../EIGENSOLVE_LANCZOS" && gmake F90="$F90"
+cd "../EIGENSOLVE_THREAD_SAFE" && gmake F90="$F90"
+cd "../GMRES" && gmake F90="$F90"
+cd "../LANCZOS" && gmake F90="$F90"
+cd "../LINEARSOLVE" && gmake F90="$F90"
+cd "../LINEARSOLVE_AUTO" && gmake F90="$F90"
+cd "../LINEARSOLVE_THREAD_SAFE" && gmake F90="$F90"
+cd "../CG" && gmake F90="$F90"
+cd "../../samples_c" && ./makecleansamplesc.all
+cd "./BICGSTAB" && gmake CC="$CC" LD="$LD"
+cd "../GMRES" && gmake CC="$CC" LD="$LD"
+cd "../LINEARSOLVE" && gmake CC="$CC" LD="$LD"
 cd ../..
