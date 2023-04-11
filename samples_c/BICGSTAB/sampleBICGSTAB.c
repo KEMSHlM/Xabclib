@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
   // Set solution vecter "x"
   for(i = 0; i < n; i++) x[i] = 1.0;
   // Make RHS vecter "b" from A*x
-  // CRS形式で格納された倍制度非対称(U: Non-symmetric)疎行列-ベクトル積の最適な実行方法を判定する．
+  // xを1で初期化して，A*xをbに代入する．
   OpenATI_DURMV_11(&n, &nnz, irp, icol, val, x, b);
   // Set initial approximate solution vecter "x_0"
   for(i = 0; i < n; i++) x[i] = 0.0;
@@ -99,6 +99,7 @@ int main(int argc, char *argv[])
   if( wk==NULL || precond==NULL ) exit(1);
 
   // Call Xabclib_BICGSTAB
+  // 先ほどxを１で求めたAx=bで求めたbよりxを求める．xの解が１になるまで反復する．
   Xabclib_BICGSTAB(&n,&nnz,irp,icol,val,b,x,precond,&npre,iatparam,ratparam,wk,&lwk,&info);
   if( info ) printf("**ERROR** info=%d\n", info);
 
