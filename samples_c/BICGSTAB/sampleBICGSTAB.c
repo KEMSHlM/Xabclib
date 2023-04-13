@@ -7,10 +7,10 @@
 #define OpenATI_INIT openati_init_
 #define OpenATI_DURMV_11 openati_durmv_11_
 #define Xabclib_BICGSTAB xabclib_bicgstab_
-void OpenATI_INIT(int *iatparam, double *ratparam, int *info);
-void OpenATI_DURMV_11(int *n, int *nnz, int *irp, int *icol, double *val,
+extern void OpenATI_INIT(int *iatparam, double *ratparam, int *info);
+extern void OpenATI_DURMV_11(int *n, int *nnz, int *irp, int *icol, double *val,
                       double *x, double *y);
-void Xabclib_BICGSTAB(int *n, int *nnz, int *irp, int *icol, double *val,
+extern void Xabclib_BICGSTAB(int *n, int *nnz, int *irp, int *icol, double *val,
                    double *b, double *x, double *precond, int *npre, 
                    int *iatparam, double *ratparam, double *wk, int *lwk,
                    int *info);

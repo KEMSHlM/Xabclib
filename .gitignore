@@ -3,4 +3,4 @@
 gload
 *.a
 lload
-build/**
+**/build/**

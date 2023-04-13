@@ -2,7 +2,7 @@
 
 ##################Intel Compiler#################
 export F90="ifort -O3 -m64 -fopenmp -shared-intel -cpp -fixed"
-export F90O3="ifort -O0 -m64 -ofpenmp -shared-intel -cpp -fixed"
+export F90O3="ifort -O0 -m64 -fopenmp -shared-intel -cpp -fixed"
 export CC="icc -O3 -m64 -shared-intel -fopenmp -lifport -lifcore -shared-intel"
 export LD="icc -O3 -m64 -shared-intel -fopenmp -lifport -lifcore -shared-intel"
 

@@ -1,8 +1,8 @@
 ifeq ($(OPENATI_COMP),HITACHI)
   F90 = /opt/ofort90/bin/f90 -Oss -64 -omp -cpp -i,L -fixed -DHF_COMPILER
 else
-	# -shared-intel ってのは，静的に確保されるメモリの上限を大きくするものらしい．
-	# intel コンパイラにはなかったから，代わりが-shared-intelみたい．
+# -shared-intel ってのは，静的に確保されるメモリの上限を大きくするものらしい．
+# intel コンパイラにはなかったから，代わりが-shared-intelみたい.
   F90 = ifort -O3 -m64 -fopenmp -shared-intel -cpp -fixed
 #  F90 = ifort -O3 -m64 -openmp -shared-intel -cpp -fixed
 #  F90 = ifort -O3 -m64 -parallel -shared-intel -cpp -fixed
