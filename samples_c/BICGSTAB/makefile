@@ -1,8 +1,8 @@
 CC = icc -O3 -m64 -fopenmp -shared-intel -lifport -lifcore -shared-intel 
 
 SRCDIR = .
-OpenATLIB = ../../build/libXabClib.a
-# OpenATLIB = ../../libOpenAT.a
+# OpenATLIB = ../../build/libXabClib.a
+OpenATLIB = ../../libOpenAT.a
 LOADNAME = gload
 LD = $(CC)
 

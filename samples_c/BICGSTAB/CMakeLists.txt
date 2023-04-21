@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(bicgstab)
+project(bicgstab LANGUAGES C)
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 

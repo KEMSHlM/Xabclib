@@ -75,7 +75,6 @@ int main(int argc, char *argv[])
   // 1:None, 2:Jacobi, 3:SSOR, 4:ILU0D, 5:ILU0, 6:ILUT
   // ILU0D: 0レベルのフィルイン.
   iatparam[25-1]=5;
-  // Set preconditioner parameters
   // 前処理行列にJacobi反復法に用いた場合，CG１回の反復に対して何回のJacobi反復を行うか
   iatparam[26-1]=5;
   // iatparam[25-1]が，4,5の場合に値を捨てるしきい値．
