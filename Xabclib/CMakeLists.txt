@@ -1,4 +1,6 @@
-project(XabClibSolver)
+project(XabClib)
+enable_language(Fortran)
+
 set(XABCLIB_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/Xabclib_CG/Xabclib_EVAL_SYM.f90
     ${CMAKE_CURRENT_SOURCE_DIR}/Xabclib_CG/Xabclib_PCSLV_SYM.f90

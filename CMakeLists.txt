@@ -3,11 +3,9 @@ cmake_minimum_required(VERSION 3.5)
 project(XabClib)
 enable_language(Fortran)
 
-set(CMAKE_VERBOSE_MAKEFILE TRUE)
-
 # intel compiler
 set(CMAKE_FORTRAN_COMPILER "/opt/intel/oneapi/compiler/2023.0.0/mac/bin/intel64/ifort" CACHE STRING "Fortran compiler" FORCE)
-set(CMAKE_FORTRAN_FLAGS "-O3 -m64 -fopenmp -shared-intel -cpp -fixed" CACHE STRING "Fortran compiler flags" FORCE)
+set(CMAKE_FORTRAN_FLAGS "-O0 -m64 -fopenmp -shared-intel -cpp -fixed" CACHE STRING "Fortran compiler flags" FORCE)
 set(CMAKE_FORTRAN_LINKER_FLAGS "-Wl,--no-undefined" CACHE STRING "FORTRAN linker flags" FORCE)
 set(CMAKE_C_LINKER_FLAGS "-Wl,--no-undefined" CACHE STRING "C linker flags" FORCE)
 
