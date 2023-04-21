@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(XabClib LANGUAGES Fortran)
+project(XabClib)
+enable_language(Fortran)
+
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 # intel compiler
@@ -20,39 +22,4 @@ add_subdirectory(OpenAT)
 add_library(${PROJECT_NAME} STATIC
     ${XABCLIB_SRCS}
     ${OPENAT_SRCS}
-)
-
-# インストールの設定
-# プロジェクトのインストール先への内容を指定する
-install(TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}Targets
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
-)
-
-# 上のターゲット設定XabClibTargets.cmakeという名前で出力する
-export(TARGETS ${PROJECT_NAME}
-       NAMESPACE ${PROJECT_NAME}::
-       FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Targets.cmake"
-)
-
-# パッケージ設定ファイルを作成するための関数を提供する
-include(CMakePackageConfigHelpers)
-
-# パッケージ設定ファイルを出力する
-write_basic_config_version_file(
-    "${PROJECT_NAME}ConfigVersion.cmake"
-    VERSION 1.0.0
-    COMPATIBILITY AnyNewerVersion
-)
-
-# 出力されたバージョン設定ファイルを適切なディレクトリにインストールする
-install(EXPORT ${PROJECT_NAME}Targets
-    FILE ${PROJECT_NAME}Config.cmake
-    NAMESPACE ${PROJECT_NAME}::
-    DESTINATION lib/cmake/${PROJECT_NAME}
-)
-
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
-    DESTINATION lib/cmake/${PROJECT_NAME}
 )
