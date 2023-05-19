@@ -1,7 +1,7 @@
 project(BICGSTAB)
 enable_language(Fortran)
 
-set(BICGSTAB_SOURCES
+add_library(BICGSTAB OBJECT
     ILUT.f90
     ILUTSOL.f90
     Xabclib_BICGSTAB.f90
@@ -14,13 +14,7 @@ set(BICGSTAB_SOURCES
     Xabclib_PCSLV.f90
 )
 
-set(BICGSTAB_OBJECTS "")
-foreach(src IN LISTS BICGSTAB_SOURCES)
-    get_filename_component(name ${src} NAME_WE)
-    set(name_obj ${name}_obj)
-    add_library(${name_obj} OBJECT ${src})
-    list(APPEND BICGSTAB_OBJECTS $<TARGET_OBJECTS:${name_obj}>)
-endforeach()
-
-# set(BICGSTAB_OBJECTS ${BICGSTAB_OBJECTS} PARENT_SCOPE)
-add_library(BICGSTAB STATIC ${BICGSTAB_OBJECTS})
+install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin)

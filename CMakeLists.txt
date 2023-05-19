@@ -1,13 +1,15 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(XabClib)
+project(XabClib VERSION 1.0.0)
 enable_language(Fortran)
 
 # intel compiler
-set(CMAKE_FORTRAN_COMPILER "/opt/intel/oneapi/compiler/2023.0.0/mac/bin/intel64/ifort" CACHE STRING "Fortran compiler" FORCE)
-set(CMAKE_FORTRAN_FLAGS "-O0 -m64 -fopenmp -shared-intel -cpp -fixed" CACHE STRING "Fortran compiler flags" FORCE)
-set(CMAKE_FORTRAN_LINKER_FLAGS "-Wl,--no-undefined" CACHE STRING "FORTRAN linker flags" FORCE)
-set(CMAKE_C_LINKER_FLAGS "-Wl,--no-undefined" CACHE STRING "C linker flags" FORCE)
+# 下のFortranを大文字のFORTRANにするとエラーになる
+set(CMAKE_Fortran_COMPILER "/opt/intel/oneapi/compiler/2023.0.0/mac/bin/intel64/ifort" CACHE STRING "Fortran compiler" FORCE)
+set(CMAKE_Fortran_FLAGS "-O0 -m64 -fopenmp -shared-intel -cpp -fixed" CACHE STRING "Fortran compiler flags" FORCE)
+
+message(STATUS "CMAKE_Fortran_COMPILER: ${CMAKE_FORTRAN_COMPILER}")
+message(STATUS "CMAKE_Fortran_FLAGS: ${CMAKE_FORTRAN_FLAGS}")
 
 # サブディレクトリ内のCMakeLists.txtファイルを追加
 add_subdirectory(OpenAT)
@@ -17,10 +19,10 @@ add_subdirectory(Xabclib/Xabclib_LANCZOS)
 add_subdirectory(Xabclib/Xabclib_ARNOLDI)
 add_subdirectory(Xabclib/Xabclib_CG)
 
-# オブジェクトファイルをまとめて静的ライブラリにする
-file(WRITE dummy.c "")
-add_library(XabClib STATIC dummy.c)
+# Create the XabClib library
+add_library(XabClib)
 
+# オブジェクトファイルをまとめて静的ライブラリにする
 target_link_libraries(XabClib PUBLIC
     OpenAT
     GMRES
@@ -29,3 +31,26 @@ target_link_libraries(XabClib PUBLIC
     ARNOLDI
     CG
 )
+
+# Specify the install location
+install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin)
+
+# Create a Config.cmake file for find_package()
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/XabClib/XabClibConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion)
+
+configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/CMake/XabClibConfig.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/XabClib/XabClibConfig.cmake"
+    INSTALL_DESTINATION lib/cmake/XabClib
+)
+
+# Install the Config files
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/XabClib/XabClibConfig.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/XabClib/XabClibConfigVersion.cmake"
+        DESTINATION lib/cmake/XabClib)

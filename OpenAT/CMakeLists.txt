@@ -1,7 +1,7 @@
 project(OpenAT)
 enable_language(Fortran)
 
-set(OpenAT_SOURCES
+add_library(OpenAT OBJECT
     OpenATI_DAFGS.f90
     OpenATI_DAFRT.f90
     OpenATI_DSRMV.f90
@@ -19,12 +19,7 @@ set(OpenAT_SOURCES
     OpenATI_QSORTI.f90
 )
 
-set(OpenAT_OBJECTS "")
-foreach(src IN LISTS OpenAT_SOURCES)
-    get_filename_component(name ${src} NAME_WE)
-    set(name_obj ${name}_obj)
-    add_library(${name_obj} OBJECT ${src})
-    list(APPEND OpenAT_OBJECTS $<TARGET_OBJECTS:${name_obj}>)
-endforeach()
-
-add_library(OpenAT STATIC ${OpenAT_OBJECTS})
+install(TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin)
