@@ -34,12 +34,27 @@ target_link_libraries(XabClib PUBLIC
 
 # Specify the install location
 install(TARGETS ${PROJECT_NAME}
+    EXPORT XabClibTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)
 
+# Create the MyLibTargets.cmake in the build directory
+export(EXPORT XabClibTargets
+    FILE "${CMAKE_CURRENT_BINARY_DIR}/XabClib/XabClibTargets.cmake"
+    NAMESPACE XabClib::
+)
+
+# Install the export set for use with the install-tree
+install(EXPORT XabClibTargets
+    FILE XabClibTargets.cmake
+    NAMESPACE XabClib::
+    DESTINATION lib/cmake/XabClib
+)
+
 # Create a Config.cmake file for find_package()
 include(CMakePackageConfigHelpers)
+
 write_basic_package_version_file(
     "${CMAKE_CURRENT_BINARY_DIR}/XabClib/XabClibConfigVersion.cmake"
     VERSION ${PROJECT_VERSION}

@@ -12,6 +12,7 @@ add_library(CG OBJECT
 )
 
 install(TARGETS ${PROJECT_NAME}
+    EXPORT XabClibTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)

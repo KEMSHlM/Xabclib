@@ -20,6 +20,7 @@ add_library(OpenAT OBJECT
 )
 
 install(TARGETS ${PROJECT_NAME}
+    EXPORT XabClibTargets
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin)
