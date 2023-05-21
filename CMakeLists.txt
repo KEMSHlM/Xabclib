@@ -4,9 +4,15 @@ project(XabClib VERSION 1.0.0)
 enable_language(Fortran)
 
 # intel compiler
-# 下のFortranを大文字のFORTRANにするとエラーになる
-set(CMAKE_Fortran_COMPILER "/opt/intel/oneapi/compiler/2023.0.0/mac/bin/intel64/ifort" CACHE STRING "Fortran compiler" FORCE)
-set(CMAKE_Fortran_FLAGS "-O0 -m64 -fopenmp -shared-intel -cpp -fixed" CACHE STRING "Fortran compiler flags" FORCE)
+if(APPLE)
+    # icc compiler (m2 mac)
+    set(CMAKE_Fortran_COMPILER "/opt/intel/oneapi/compiler/2023.0.0/mac/bin/intel64/ifort" CACHE STRING "Fortran compiler flags" FORCE)
+    set(CMAKE_Fortran_FLAGS "-O3 -m64 -fopenmp -shared-intel -lifport -lifcore -march=native -diag-disable=10441" CACHE STRING "Fortran compiler flags" FORCE)
+elseif(UNIX)
+    # icc compiler (ito)
+    set(CMAKE_Fortran_COMPILER "/home/app/intel/oneapi/2021.3/compiler/2021.3.0/linux/bin/intel64/ifort" CACHE STRING "Fortran compiler flags" FORCE)
+    set(CMAKE_Fortran_FLAGS "-O3 -m64 -fopenmp -shared-intel -lifport -lifcore -march=native -diag-disable=10441" CACHE STRING "Fortran compiler flags" FORCE)
+endif()
 
 message(STATUS "CMAKE_Fortran_COMPILER: ${CMAKE_FORTRAN_COMPILER}")
 message(STATUS "CMAKE_Fortran_FLAGS: ${CMAKE_FORTRAN_FLAGS}")
