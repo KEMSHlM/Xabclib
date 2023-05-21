@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(bicgstab LANGUAGES C)
 
 set(CMAKE_C_COMPILER "/usr/local/bin/icc" CACHE STRING "C compiler" FORCE)
-set(CMAKE_C_FLAGS "-O3 -m64 -fopenmp -shared-intel -lifport -lifcore" CACHE STRING "C flags" FORCE)
+set(CMAKE_C_FLAGS "-O3 -m64 -fopenmp -shared-intel -lifport -lifcore -march=native -diag-disable=10441" CACHE STRING "C flags" FORCE)
 
 message(STATUS "CMAKE_C_COMPILER = ${CMAKE_C_COMPILER}")
 
