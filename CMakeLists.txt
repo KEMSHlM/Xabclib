@@ -4,18 +4,43 @@ project(XabClib VERSION 1.0.0)
 enable_language(Fortran)
 
 # intel compiler
-if(APPLE)
-    # icc compiler (m2 mac)
-    set(CMAKE_Fortran_COMPILER "/opt/intel/oneapi/compiler/2023.0.0/mac/bin/intel64/ifort" CACHE STRING "Fortran compiler flags" FORCE)
-    set(CMAKE_Fortran_FLAGS "-O3 -m64 -fopenmp -shared-intel -lifport -lifcore -march=native -diag-disable=10441" CACHE STRING "Fortran compiler flags" FORCE)
-elseif(UNIX)
-    # icc compiler (ito)
-    set(CMAKE_Fortran_COMPILER "/home/app/intel/oneapi/2021.3/compiler/2021.3.0/linux/bin/intel64/ifort" CACHE STRING "Fortran compiler flags" FORCE)
-    set(CMAKE_Fortran_FLAGS "-O3 -m64 -fopenmp -shared-intel -lifport -lifcore -march=native -diag-disable=10441" CACHE STRING "Fortran compiler flags" FORCE)
+find_program(IFORT_COMPILER ifort)
+if(IFORT_COMPILER)
+    message(STATUS "ifort compiler found at ${IFORT_COMPILER}")
+    set(CMAKE_Fortran_COMPILER ${IFORT_COMPILER} CACHE STRING "Fortran compiler" FORCE)
+    set(CMAKE_Fortran_FLAGS "-O3 -m64 -shared-intel -lifport -lifcore -march=native -fixed" CACHE STRING "Fortran compiler flags" FORCE)
+else()
+    message(FATAL_ERROR "ifort compiler not found")
 endif()
 
-message(STATUS "CMAKE_Fortran_COMPILER: ${CMAKE_FORTRAN_COMPILER}")
-message(STATUS "CMAKE_Fortran_FLAGS: ${CMAKE_FORTRAN_FLAGS}")
+message("-- Searching OpenMP Library")
+# intel OpenMP library path
+if (APPLE)
+    set(OpenMP_PATH "$ENV{ONEAPI_ROOT}/compiler/latest/mac/compiler/lib")
+elseif (UNIX)
+    set(OpenMP_PATH "$ENV{ONEAPI_ROOT}/compiler/latest/linux/compiler/lib/intel64")
+elseif (WIN32)
+    # 僕は使わないから設定してない
+    # set(OpenMP_PATH "C:/path/for/windows")
+else()
+    message(FATAL_ERROR "Unsupported operating system")
+endif()
+
+find_library(OPENMP_LIB 
+    NAMES iomp5
+    HINTS ${OpenMP_PATH}
+)
+
+if (OPENMP_LIB)
+    message(STATUS "OpenMP found : ${OPENMP_LIB}")    
+    set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -qopenmp")
+    message(STATUS "CMAKE_Fortran_FLAGS : ${CMAKE_Fortran_FLAGS}")
+else()
+    message(FATAL_ERROR "OpenMP not found")    
+endif()
+
+message(STATUS "CMAKE_Fortran_COMPILER: ${CMAKE_Fortran_COMPILER}")
+message(STATUS "CMAKE_Fortran_FLAGS: ${CMAKE_Fortran_FLAGS}")
 
 # サブディレクトリ内のCMakeLists.txtファイルを追加
 add_subdirectory(OpenAT)
