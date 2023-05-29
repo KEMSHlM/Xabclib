@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(XabClib VERSION 1.0.0)
-enable_language(Fortran)
-
 # intel compiler
 find_program(IFORT_COMPILER ifort)
 if(IFORT_COMPILER)
@@ -34,13 +31,15 @@ find_library(OPENMP_LIB
 if (OPENMP_LIB)
     message(STATUS "OpenMP found : ${OPENMP_LIB}")    
     set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -qopenmp")
-    message(STATUS "CMAKE_Fortran_FLAGS : ${CMAKE_Fortran_FLAGS}")
 else()
     message(FATAL_ERROR "OpenMP not found")    
 endif()
 
 message(STATUS "CMAKE_Fortran_COMPILER: ${CMAKE_Fortran_COMPILER}")
 message(STATUS "CMAKE_Fortran_FLAGS: ${CMAKE_Fortran_FLAGS}")
+
+project(XabClib VERSION 1.0.0)
+enable_language(Fortran)
 
 # サブディレクトリ内のCMakeLists.txtファイルを追加
 add_subdirectory(OpenAT)
